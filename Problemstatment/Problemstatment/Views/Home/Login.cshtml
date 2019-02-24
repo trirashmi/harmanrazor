@@ -1,0 +1,79 @@
+﻿
+@model Problemstatment.Models.UserLoginModel
+
+@{
+    ViewBag.Title = "Test Demo Application";
+}
+<link href="~/Content/Custom.css" rel="stylesheet" />
+
+<div style="margin-top: -1%;">
+    <img src="~/Image/Patient Portal_1.jpg" style="width:100%;position: inherit;" />
+</div>
+<h2 style="text-align:center">Test Demo Application</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (Model != null)
+    {
+        <h1>
+            @Model.Message
+        </h1>
+    }
+
+    <fieldset style="border:solid">
+
+        <legend style="text-align:center;background-color:blue;width:45%">UserLogin</legend>
+
+        <div class="editor-label" style="text-align:center;">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field" style="text-align:center;border: transparent;">
+            @Html.TextBoxFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+
+        <div class="editor-label" style="text-align:center;">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field" style="text-align:center;">
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <p style="text-align:center;margin-top:10px">
+            <input type="image" src="~/Image/images.jpg" style="width:3%" onclick="doLogin();" value="Login" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        function doLogin() {
+            debugger;
+            var UserName = $("#UserName").val();
+            var Password = $("#Password").val();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    'UserName': UserName,
+                    'Password': Password
+
+                },
+                url: "@Url.Action("DoLogin","Login")",
+                success: function (data) {
+                    if (data=="True") {
+                        window.location = "@Url.Action("Dashboard", "Home")";
+                    }
+                    else
+                        alert("Invalid uid or pwd.");
+                },
+               onError: function () { }
+            })
+        }
+    </script>
+
+
+}

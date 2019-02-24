@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Test dashboard Application";
+}
+<link href="~/Content/Custom.css" rel="stylesheet" />
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Dashboard</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Select User</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+            <li><a href="/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="split left" style="margin-top:4%">
+    <div class="container">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-heading">PersonDetails</a>
+            <span class="getlist">
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="split right" style="margin-top:4% ;border:solid;">
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Address</th>
+                <th scope="col">Doctor</th>
+                <th scope="col">Is Normal</th>
+            </tr>
+        </thead>
+        <tbody class="body">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+    <img width="15%" src="~/Image/Person1.png" id="image1" />
+    <img width="15%" src="~/Image/Person2.png" id="image2" />
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            var patient = {
+                name: "",
+                age: "",
+                address: "",
+                doctor: "",
+                isnormal: "",
+                image1: "",
+                image2: ""
+
+            }
+
+            var arr = [];
+
+            arr.push(
+                {
+                    name: "harman1",
+                    age: "21",
+                    address: "address21",
+                    doctor: "doctor1",
+                    isnormal: true,
+                    image1: "/Image/Person1.png",
+                    image2: "/Image/Person2.png"
+                },
+                {
+                    name: "harman2",
+                    age: "22",
+                    address: "address22",
+                    doctor: "doctor2",
+                    isnormal: true,
+                    image1: "/Image/Person2.png",
+                    image2: "/Image/Person3.png"
+                },
+                {
+                    name: "harman3",
+                    age: "23",
+                    address: "address23",
+                    doctor: "doctor3",
+                    isnormal: true,
+                    image1: "/Image/Person1.png",
+                    image2: "/Image/Person3.png"
+                }
+            );
+            var htmlstring = "";
+            arr.map(function (ele, ind) {
+                htmlstring += '<a href="#"  class="list-group-item" data-name="' + ele.name + '" data-age="' + ele.age + '" data-address="' + ele.address + '" data-doctor="' + ele.doctor + '" data-isnormal="' + ele.isnormal + '" data-image1="' + ele.image1 + '" data-image2="' + ele.image2 + '" "><span>' + ele.name + '</span><span style="padding:0 0 0 22%">' + ele.age + 'years</span></a>';
+            });
+            $(".getlist").html(htmlstring);
+
+            $(document).on("click", ".list-group-item>span", function (event) {
+
+                console.log(event.target)
+                var _target = event.target.parentElement.dataset;
+
+                $(".body").html("<tr> <td >" + _target.name + "</td>     <td>" + _target.age + "</td>                <td>" + _target.address + "</td>                <td>" + _target.doctor + "</td>                <td>" + _target.isnormal + "</td>                </tr >   ")
+                $("#image1").attr("src", _target.image1);
+                $("#image2").attr("src", _target.image2);
+            })
+
+        });
+
+
+
+
+    </script>
+}
